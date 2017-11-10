@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/BankStart.unity
+- path: Assets/Scene/BankWait.unity
   isLoaded: 1
   isActive: 1
