@@ -25,7 +25,7 @@ public class Client : MonoBehaviour {
         if (socketReady)
             return;
         // Default host / port values
-        string host = "127.0.0.1";
+        string host = "165.132.58.240";
         int port = 6321;
 
         //overwrite default host / port values, if there is something in those boxes

@@ -430,18 +430,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scene
+    - Assets/Script/Client
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scene
+  - Assets/Script/Client
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\DTL_SUN\Documents\git\Margo
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 1a260000
-    m_LastClickedID: 9754
+    m_SelectedIDs: 22260000
+    m_LastClickedID: 9762
     m_ExpandedIDs: 00000000122600001826000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -586,9 +586,9 @@ MonoBehaviour:
     height: 475
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 1c260000
+    m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 60edffff0ef3ffff44f7ffffcef8ffff1afcffff00000000
+    m_ExpandedIDs: 16cefffff2ceffffeacfffffdadbffffb6dcffffaeddffff1afcffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -607,7 +607,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 2}
     m_SearchString: 
   m_ExpandedScenes:
-  - BankWait
+  - MargoChat
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
