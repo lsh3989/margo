@@ -114,10 +114,14 @@ public class Server : MonoBehaviour {
         if(data.Contains("&NAME"))
         {
             c.clientName = data.Split('|')[1];
-            Broadcast(c.clientName + " has connected!", clients);
+            Broadcast("&MASTER|"+c.clientName + " has connected!", clients);
             return;
         }
-        Broadcast(c.clientName + " : " + data,clients);
+        if (data.Contains("&SERVICE"))
+        {
+            Broadcast( data.Split('|')[1],clients);
+        }
+        Broadcast(c.clientName + "|&CHAT|" + data,clients);
     }
     private void Broadcast(string data, List<ServerClient> cl)
     {
