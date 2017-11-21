@@ -220,6 +220,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Client\Client.cs" />
+    <Compile Include="Assets\Script\Client\Ordercnttext.cs" />
+    <Compile Include="Assets\Script\Client\OrderMenu.cs" />
+    <Compile Include="Assets\Script\Client\Servicebtn.cs" />
     <Compile Include="Assets\Script\Server\Server.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

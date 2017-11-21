@@ -111,10 +111,20 @@ public class Server : MonoBehaviour {
 
     private void OnIncomingData (ServerClient c, string data)
     {
-        if(data.Contains("&NAME"))
+        
+        
+        if (data.Contains("&NAME"))
         {
             c.clientName = data.Split('|')[1];
             Broadcast("&MASTER|"+c.clientName + " has connected!", clients);
+            return;
+        }
+        if(data.Contains("&Order"))
+        {
+            
+            data = data.Split('|')[1];
+            Debug.Log("1212" + data);
+            Broadcast("&MASTER|" + c.clientName+"님이 "+data, clients);
             return;
         }
         if (data.Contains("&SERVICE"))

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +25,9 @@ public class Client : MonoBehaviour {
         if (socketReady)
             return;
         // Default host / port values
-        string host = "165.132.58.240";
+//        string host = "165.132.58.240";
+        string host = "192.168.0.2";
+
         int port = 6321;
         
         
@@ -82,7 +83,8 @@ public class Client : MonoBehaviour {
 
     private void OnIncomingData(string data)
     {
-        if(data == "%NAME")
+        Debug.Log(data);
+        if (data == "%NAME")
         {
             Send("&NAME|" + clientName);
 
@@ -101,8 +103,8 @@ public class Client : MonoBehaviour {
             {
                 go.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
                 go.GetComponent<RectTransform>().localPosition = new Vector3(120, -(messangeCnt - 1) * 100, 0);
-                go.transform.GetChild(1).GetComponent<RectTransform>().localPosition = new Vector3(600, -(messangeCnt - 1) * 100, 0);
-                go.transform.GetChild(2).GetComponent<RectTransform>().localPosition = new Vector3(600, -(messangeCnt - 1) * 100, 0);
+                go.transform.GetChild(1).GetComponent<RectTransform>().localPosition = new Vector3(-600, -(messangeCnt - 1) * 100, 0);
+                go.transform.GetChild(2).GetComponent<RectTransform>().localPosition = new Vector3(-600, -(messangeCnt - 1) * 100, 0);
 
             }
             go.transform.GetChild(1).GetComponent<Text>().text = data.Split('|')[0];
@@ -143,7 +145,11 @@ public class Client : MonoBehaviour {
         socket.Close();
         socketReady = false;
     }
-
+    public void order(string data)
+    {
+        Debug.Log(data);
+        Send(data+"주문하셨습니다.");
+    }
     private void OnApplicationQuit()
     {
         CloseSocket();
