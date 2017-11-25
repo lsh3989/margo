@@ -25,8 +25,8 @@ public class Client : MonoBehaviour {
         if (socketReady)
             return;
         // Default host / port values
-//        string host = "165.132.58.240";
-        string host = "192.168.0.2";
+       // string host = "165.132.58.240";         //연구실
+      string host = "192.168.0.2";              //집
 
         int port = 6321;
         
