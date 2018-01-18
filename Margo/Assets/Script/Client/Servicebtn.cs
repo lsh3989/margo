@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Servicebtn : MonoBehaviour {
     public GameObject panelprefab;
+    public GameObject paymentprefab;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,9 +14,15 @@ public class Servicebtn : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void servicebtn()
+    public void servicebtn1()
     {
-        GameObject menu = GameObject.Find("Canvas");
+        GameObject menu = gameObject.transform.parent.gameObject;
         GameObject go = Instantiate(panelprefab, menu.transform) as GameObject;
     }
+    public void servicebtn2()
+    {
+        GameObject payment= gameObject.transform.parent.gameObject;
+        GameObject go = Instantiate(paymentprefab, payment.transform) as GameObject;
+    }
+
 }

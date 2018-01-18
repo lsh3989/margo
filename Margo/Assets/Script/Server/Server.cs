@@ -8,9 +8,11 @@ using UnityEngine;
 
 public class Server : MonoBehaviour {
 
-    private List<ServerClient> clients;
-    private List<ServerClient> disconnectList;
+    public List<ServerClient> clients;
+    public List<ServerClient> disconnectList;
+    public List<Chatingroom> chatingroom;
     public int port = 6321;
+    public int roomcnt;
     private TcpListener server;
     private bool serverStarted;
     private void Start()
@@ -31,6 +33,37 @@ public class Server : MonoBehaviour {
         {
             Debug.Log("Socket error: " + e.Message);
         }
+
+
+        chatingroom = new List<Chatingroom>();
+        chatingroom.Add(new Chatingroom());
+        chatingroom[0].roomid = roomcnt++;
+        chatingroom[0].roomName = "제1공학관";
+        chatingroom[0].latitude = (float)37.561845;
+        chatingroom[0].longitude = (float)126.936167;
+        chatingroom[0].clients = new List<ServerClient>();
+        chatingroom.Add(new Chatingroom());
+        chatingroom[1].roomid = roomcnt++;
+        chatingroom[1].roomName = "중앙도서관";
+        chatingroom[1].latitude = (float)37.563703;
+        chatingroom[1].longitude = (float)126.936911;
+
+        chatingroom[1].clients = new List<ServerClient>();
+        chatingroom.Add(new Chatingroom());
+        chatingroom[2].roomid = roomcnt++;
+        chatingroom[2].roomName = "공학원";
+        chatingroom[2].latitude = (float)37.560837;
+        chatingroom[2].longitude = (float)126.9354687;
+
+        chatingroom[2].clients = new List<ServerClient>();
+
+        chatingroom.Add(new Chatingroom());
+        chatingroom[3].roomid = roomcnt++;
+        chatingroom[3].roomName = "전체방";
+        chatingroom[3].clients = new List<ServerClient>();
+        // chatingroom[3].latitude = (float)37.560837;
+        //  chatingroom[3].longitude = (float)126.9354687;
+
     }
 
     private void Update()
@@ -64,7 +97,7 @@ public class Server : MonoBehaviour {
         }
         for(int i=0;i < disconnectList.Count-1;i++)
         {
-            Broadcast(disconnectList[i].clientName + " has disconnected", clients);
+       //     Broadcast(disconnectList[i].clientName + " has disconnected", clients);
 
             clients.Remove(disconnectList[i]);
             disconnectList.RemoveAt(i);
@@ -106,35 +139,116 @@ public class Server : MonoBehaviour {
 
         // Send a message to everyone, say someone has connected
 
-        Broadcast("%NAME", new List<ServerClient>() { clients[clients.Count-1]});
+        //Broadcast("%NAME", new List<ServerClient>() { clients[clients.Count-1]});
     }
 
     private void OnIncomingData (ServerClient c, string data)
     {
+        Debug.Log(data + "in onincoingdata in server");
+        int serveridx;
+        serveridx = int.Parse(data.Split('|')[data.Split('|').Length-1]);
         
-        
+        if(data.Contains("&MakeRoom"))
+            {
+
+            Debug.Log(roomcnt + "roomcnt in server");
+       //     chatingroom = new List<Chatingroom>();
+            chatingroom.Add(new Chatingroom());
+            chatingroom[roomcnt].roomid = roomcnt;
+            chatingroom[roomcnt].roomName = data.Split('|')[1];
+            chatingroom[roomcnt].latitude = float.Parse(data.Split('|')[2]);
+            chatingroom[roomcnt].longitude = float.Parse(data.Split('|')[3]);
+            chatingroom[roomcnt].clients = new List<ServerClient>();
+            string broadmessage;
+            broadmessage = "&MakeRoom|" + chatingroom[roomcnt].roomName+"|"+ roomcnt.ToString();
+            Makeroom(broadmessage, c);
+
+            roomcnt++;
+            return;
+        }
+        if (data.Contains("&Payment"))
+        {
+            string broadmessage;
+            broadmessage = "&MASTER|";
+            if(chatingroom[serveridx].totalprice == 0)
+            {
+                broadmessage += "결제하실 내역이 없습니다.";
+                Broadcast(broadmessage, chatingroom[serveridx].clients, serveridx);
+                return;
+            }
+            if (data.Split('|')[1] == "1")
+            {
+               broadmessage += "각자 " + (chatingroom[serveridx].totalprice / chatingroom[serveridx].clients.Count).ToString() +"원 입니다.";
+               Broadcast(broadmessage, chatingroom[serveridx].clients, serveridx);
+            }
+            else if(data.Split('|')[1] == "2")
+            {
+               for(int i=0;i< chatingroom[serveridx].clients.Count; i++)
+                {
+                    if(chatingroom[serveridx].clients[i].orderprice != 0)
+                    broadmessage += chatingroom[serveridx].clients[i].clientName + "님 " + chatingroom[serveridx].clients[i].orderprice + "원 ";
+                }
+                broadmessage += "입니다.";
+                Broadcast(broadmessage, chatingroom[serveridx].clients, serveridx);
+            }
+            else
+            {
+                broadmessage += c.clientName.ToString() + "님" + chatingroom[serveridx].totalprice.ToString() + "원 입니다.";
+                Broadcast(broadmessage, chatingroom[serveridx].clients, serveridx);
+            }
+            for (int i = 0; i < chatingroom[serveridx].clients.Count; i++)//계산후 초기화
+                chatingroom[serveridx].clients[i].orderprice = 0;
+           
+                chatingroom[serveridx].totalprice = 0; //계산후 초기화
+            return;
+        }
+        if (data.Contains("&Pricerequest"))
+        {
+           
+            Broadcast("&Pricerequest|" + chatingroom[serveridx].totalprice.ToString() + "|" + chatingroom[serveridx].clients.Count, chatingroom[serveridx].clients, serveridx);
+            return;
+        }
+        if (data.Contains("&Enter"))
+        {
+            c.clientName = data.Split('|')[1];
+            if (chatingroom[serveridx].clients.Contains(c) == false)
+                chatingroom[serveridx].clients.Add(c);
+            return;
+        }
+        if (data.Contains("&Gps"))
+        {
+            Debug.Log("Gps in server");
+            float latitude, longitude;
+            latitude = float.Parse(data.Split('|')[1]);
+            longitude = float.Parse(data.Split('|')[2]);
+            LocationRoom(latitude, longitude, c);
+            return;
+        }
         if (data.Contains("&NAME"))
         {
             c.clientName = data.Split('|')[1];
-            Broadcast("&MASTER|"+c.clientName + " has connected!", clients);
+            Broadcast("&MASTER|"+c.clientName + " has connected!", chatingroom[serveridx].clients, serveridx);
             return;
         }
         if(data.Contains("&Order"))
         {
-            
+            int orderprice;
+            orderprice = int.Parse(data.Split('|')[2]);
             data = data.Split('|')[1];
-            Debug.Log("1212" + data);
-            Broadcast("&MASTER|" + c.clientName+"님이 "+data, clients);
+            c.orderprice += orderprice;
+            chatingroom[serveridx].totalprice += orderprice;
+            Broadcast("&MASTER|" + c.clientName+"님이 "+data + "주문하셨습니다.", chatingroom[serveridx].clients, serveridx);
             return;
         }
         if (data.Contains("&SERVICE"))
         {
-            Broadcast( data.Split('|')[1],clients);
+            Broadcast( data.Split('|')[1], chatingroom[serveridx].clients, serveridx);
         }
-        Broadcast(c.clientName + "|&CHAT|" + data,clients);
+        Broadcast(c.clientName + "|&CHAT|" + data, chatingroom[serveridx].clients, serveridx);
     }
-    private void Broadcast(string data, List<ServerClient> cl)
+    private void Broadcast(string data, List<ServerClient> cl, int serveridx)
     {
+        data += "|" + serveridx.ToString();
         foreach (ServerClient c in cl)
         {
             try
@@ -149,17 +263,106 @@ public class Server : MonoBehaviour {
             }
         }
     }
+    public struct Mindistance
+    {
+        public float distance;
+        public int idx;
+    }
+    public void LocationRoom(float latitude, float longitude, ServerClient c)
+    {
+        Debug.Log("LocationRoom in server");
+        string data;
+        Mindistance[] min = new Mindistance[3];
+        
+        double distance;
+        min[0].distance = min[1].distance = min[2].distance = 9999999999;
+        data = "&Gps";
+        Debug.Log("chatingroom.Count" + chatingroom.Count);
+        for (int i=0;i<chatingroom.Count;i++)
+        {
+            if (chatingroom[i].latitude == 0 && chatingroom[i].longitude == 0) continue;
+            distance = DistanceTo((double)latitude, (double)longitude, (double)chatingroom[i].latitude, (double)chatingroom[i].longitude);
+            
+            for (int j=0;j<3;j++)
+            {
+                if(distance < min[j].distance)
+                {
+                    for (int k = j + 1; k < 3; k++)
+                        min[k] = min[k - 1];
+                    min[j].distance = (float)distance;
+                    min[j].idx = i;
+                    break;
+                }
+            }
+        }
+        //Array.Sort(min);
+        data += "|";
+        data += (chatingroom[min[0].idx].roomName + "|" + min[0].distance.ToString() + "|" + min[0].idx.ToString() + "|");
+        data += (chatingroom[min[1].idx].roomName + "|" + min[1].distance.ToString() + "|" + min[1].idx.ToString() + "|");
+        data += (chatingroom[min[2].idx].roomName + "|" + min[2].distance.ToString() + "|" + min[2].idx.ToString());
+        try
+        {
+            StreamWriter writer = new StreamWriter(c.tcp.GetStream());
+            writer.WriteLine(data);
+            writer.Flush();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Write error : " + e.Message + " to client " + c.clientName);
+        }
+    }
+    public void Makeroom(string data, ServerClient c)
+    {
+        try
+        {
+            StreamWriter writer = new StreamWriter(c.tcp.GetStream());
+            writer.WriteLine(data);
+            writer.Flush();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Write error : " + e.Message + " to client " + c.clientName);
+        }
+    }
+    public static double DistanceTo(double lat1, double lon1, double lat2, double lon2)
+    {
+        double rlat1 = Math.PI * lat1 / 180;
+        double rlat2 = Math.PI * lat2 / 180;
+        double theta = lon1 - lon2;
+        double rtheta = Math.PI * theta / 180;
+        double dist =
+            Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
+            Math.Cos(rlat2) * Math.Cos(rtheta);
+        dist = Math.Acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+
+        
+
+        return dist*1000;
+    }
 }
+
 public class ServerClient
 {
     public TcpClient tcp;
     public string clientName;
-
+    public int orderprice;
     public ServerClient(TcpClient clientSocket)
     {
         clientName = "Guest";
         tcp = clientSocket;
     }
     
+}
+public class Chatingroom
+{
+    public int roomid;
+    public int totalprice;
+    public string roomName;
+    public int peapleNum;
+    public float latitude;
+    public float longitude;
+    public List<ServerClient> clients;
 }
 
