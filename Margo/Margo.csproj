@@ -290,21 +290,27 @@
     <Compile Include="Assets\Script\Client\EnterChat.cs" />
     <Compile Include="Assets\Script\Client\GPS.cs" />
     <Compile Include="Assets\Script\Client\GPSText.cs" />
+    <Compile Include="Assets\Script\Client\Interop.cs" />
     <Compile Include="Assets\Script\Client\itemDisplay.cs" />
     <Compile Include="Assets\Script\Client\MakeRoom.cs" />
     <Compile Include="Assets\Script\Client\MakeRoombtn.cs" />
     <Compile Include="Assets\Script\Client\MenuBtn.cs" />
     <Compile Include="Assets\Script\Client\Modebtn.cs" />
+    <Compile Include="Assets\Script\Client\NFCDevice.cs" />
     <Compile Include="Assets\Script\Client\Ordercnttext.cs" />
     <Compile Include="Assets\Script\Client\OrderMenu.cs" />
     <Compile Include="Assets\Script\Client\PanelDestroy.cs" />
     <Compile Include="Assets\Script\Client\Payment.cs" />
     <Compile Include="Assets\Script\Client\SendMessage.cs" />
     <Compile Include="Assets\Script\Client\Servicebtn.cs" />
+    <Compile Include="Assets\Script\Client\Wifi.cs" />
+    <Compile Include="Assets\Script\Client\WifiDirectBase.cs" />
+    <Compile Include="Assets\Script\Client\WlanApi.cs" />
     <Compile Include="Assets\Script\Client\XMLManager.cs" />
     <Compile Include="Assets\Script\Server\Server.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
     <None Include="Assets\item_data.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

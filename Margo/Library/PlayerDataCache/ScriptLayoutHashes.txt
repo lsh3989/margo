@@ -2,6 +2,7 @@ Android
 SceneListBegin?
 Assets/Scene/MargoMain.unity
 SceneListEnd?
+dd9153071bcecbb888dde9b7a3f37ae4 Assembly-CSharp.dll:.NFCDevice
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 970a95104359198fe1a98ef48655de8c UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -116,12 +117,14 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 eacdc14e5e28a5b63bf4967a33792587 Assembly-CSharp.dll:.OrderMenu
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.WifiDirectBase
 6a2c2539ed52a33034c03235694bb83c Assembly-CSharp.dll:.itemDisplay
 f1cbfcf0cb0b4ca09a826c496a000f24 Assembly-CSharp.dll:.GPS
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
 54b39980783fa31d2eab109b2615b385 Assembly-CSharp.dll:.Ordercnttext
 1176a622d636b0feeeff2200254d4373 Assembly-CSharp.dll:.Server
+609f422a58e00bb0d17761c0aec22d4c Assembly-CSharp.dll:.MakeRoom
 d0abe6eaea1bae5cdab0fac6bdcedb49 Assembly-CSharp.dll:.Servicebtn
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -138,11 +141,13 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 73843688b51256aed059f049c540bca8 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 528ea1fd7c01796fc60c4e2f172ea229 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 255932bbd0807b9482bf360ae7b6665d Assembly-CSharp.dll:.Payment
+c04c4ae3d4ca2964edb29fca84d2e40f Assembly-CSharp.dll:.MakeRoombtn
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 41f178ed7ef5b37e555ae004c83f64ce Assembly-CSharp.dll:.EnterChat
+4a721c123390d5a8a1f596d947d26f45 Assembly-CSharp.dll:.Wifi
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PanelDestroy
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
@@ -155,5 +160,3 @@ d8bcbc212b9997859fc41e5419b5d86e Assembly-CSharp.dll:.XMLManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.SendMessage
 7efdb3495ebb102ca7e8992a1f298a43 Assembly-CSharp.dll:.Back
 0490c9a04240dfec1ee6ef294e8e9f93 Assembly-CSharp.dll:.Modebtn
-609f422a58e00bb0d17761c0aec22d4c Assembly-CSharp.dll:.MakeRoom
-2145f17f36597f3a854c0e89a269f7b0 Assembly-CSharp.dll:.MakeRoombtn

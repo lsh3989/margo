@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GPS : MonoBehaviour {
 
-    public static GPS Instance { set; get; }
+    public static  GPS Instance { set; get; }
     public float latitude;
     public float longitude;
     public float LastGPSChecktime;
@@ -26,6 +26,7 @@ public class GPS : MonoBehaviour {
             Debug.Log("User has not enabled GPS");
             yield break;
         }
+        
         Input.location.Start();
         int maxWait = 20;
         while(Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
