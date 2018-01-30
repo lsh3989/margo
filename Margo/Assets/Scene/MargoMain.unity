@@ -2520,7 +2520,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save
+  m_Text: QRScan
 --- !u!222 &994692920
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2544,6 +2544,7 @@ GameObject:
   - component: {fileID: 1029730945}
   - component: {fileID: 1029730947}
   - component: {fileID: 1029730949}
+  - component: {fileID: 1029730950}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -2639,6 +2640,17 @@ MonoBehaviour:
   tagID: 
   tag_output_text: {fileID: 973359498}
   tagFound: 0
+--- !u!114 &1029730950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1029730943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed1c7ecda1951648b3f45dc597e7dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1074347312
 GameObject:
   m_ObjectHideFlags: 0
@@ -4568,7 +4580,7 @@ GameObject:
   - component: {fileID: 1777835367}
   - component: {fileID: 1777835366}
   m_Layer: 5
-  m_Name: Save
+  m_Name: QRscan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4601,7 +4613,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1777835364}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -4634,19 +4646,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1407197588}
-        m_MethodName: modebtn3
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1407197590}
-        m_MethodName: Save
+      - m_Target: {fileID: 1029730950}
+        m_MethodName: QRstartbtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

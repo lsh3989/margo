@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -285,8 +283,15 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/DTL_SUN/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="zxing.unity">
+      <HintPath>Assets/Scripts/zxing.unity.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Samples\Boot.cs" />
+    <Compile Include="Assets\Samples\Continuous\ContinuousDemo.cs" />
+    <Compile Include="Assets\Samples\QRStart.cs" />
+    <Compile Include="Assets\Samples\Simple\SimpleDemo.cs" />
     <Compile Include="Assets\Script\Client\Back.cs" />
     <Compile Include="Assets\Script\Client\Client.cs" />
     <Compile Include="Assets\Script\Client\EnterChat.cs" />
@@ -310,11 +315,24 @@
     <Compile Include="Assets\Script\Client\WlanApi.cs" />
     <Compile Include="Assets\Script\Client\XMLManager.cs" />
     <Compile Include="Assets\Script\Server\Server.cs" />
+    <Compile Include="Assets\Scripts\External\WizUtils\Logger\Log.cs" />
+    <Compile Include="Assets\Scripts\External\WizUtils\Logger\LogLevel.cs" />
+    <Compile Include="Assets\Scripts\External\WizUtils\Logger\Services\ConsoleService.cs" />
+    <Compile Include="Assets\Scripts\External\WizUtils\Logger\Services\FileService.cs" />
+    <Compile Include="Assets\Scripts\External\WizUtils\Logger\Services\ILogService.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IParser.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IScanner.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IWebcam.cs" />
+    <Compile Include="Assets\Scripts\Parser\ParserResult.cs" />
+    <Compile Include="Assets\Scripts\Parser\ZXingParser.cs" />
+    <Compile Include="Assets\Scripts\Scanner\Scanner.cs" />
+    <Compile Include="Assets\Scripts\Scanner\ScannerStatus.cs" />
+    <Compile Include="Assets\Scripts\Settings\ScannerSettings.cs" />
+    <Compile Include="Assets\Scripts\Webcam\UnityWebcam.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Plugins\Android\AndroidManifest.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\res\xml\nfc_tech_filter.xml" />
     <None Include="Assets\item_data.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

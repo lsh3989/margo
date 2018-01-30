@@ -1,6 +1,7 @@
 Android
 SceneListBegin?
 Assets/Scene/MargoMain.unity
+Assets/Samples/Continuous/ContinuousDemo.unity
 SceneListEnd?
 7ba6d3a0fde3627e028c663d9df93070 Assembly-CSharp.dll:.NFCDevice
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
@@ -160,3 +161,7 @@ d8bcbc212b9997859fc41e5419b5d86e Assembly-CSharp.dll:.XMLManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.SendMessage
 7efdb3495ebb102ca7e8992a1f298a43 Assembly-CSharp.dll:.Back
 0490c9a04240dfec1ee6ef294e8e9f93 Assembly-CSharp.dll:.Modebtn
+d0502c076f4a88d4e21e5de106367807 Assembly-CSharp.dll:.SimpleDemo
+d0502c076f4a88d4e21e5de106367807 Assembly-CSharp.dll:.ContinuousDemo
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Boot
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.QRStart
