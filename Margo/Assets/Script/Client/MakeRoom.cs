@@ -13,14 +13,19 @@ public class MakeRoom : MonoBehaviour {
        //Room.transform.GetChild(i).GetChild(2).GetComponent<Text>().text = MenuName[i];
         
     }
-    public void MakeRoombtn()
+    public void MakeRoombuttons()
     {
         ordermessage += "&MakeRoom|";
-        RoomName = Room.transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text;
-        ordermessage += RoomName;
 
+        Room.transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text = "0";
+        RoomName = Room.transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text;
+        Room.transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text = "1";
+        ordermessage += RoomName;
+        
         Debug.Log(ordermessage);
         GameObject.Find("Server").GetComponent<Client>().MakeRoom(ordermessage);
+
+        Room.transform.GetChild(0).GetChild(1).GetChild(2).GetComponent<Text>().text = "2";
         //   Menu.transform.parent.parent.GetComponent<PanelDestroy>().destroy();
         //   GameObject.Destroy(Menu.transform.parent);
         Room.transform.parent.GetComponent<RectTransform>().position = new Vector3(7000, 0, 0);

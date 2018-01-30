@@ -12,7 +12,7 @@ public class GPS : MonoBehaviour {
     public string GPSmessage;
 	// Use this for initialization
 	void Start () {
-        LastGPSChecktime = 0;
+        LastGPSChecktime = -5;
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(StartLocationService());

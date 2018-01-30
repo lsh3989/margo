@@ -31,6 +31,7 @@ public class Client : MonoBehaviour {
     private void Start()
     {
         itemDisplay = scenemanager.GetComponent<itemDisplay>();
+        serverid = 0;
     }
     public void ConnectToServer()
     {
@@ -111,7 +112,17 @@ public class Client : MonoBehaviour {
         int serveridx;
         int index = new int();
         serveridx = int.Parse(data.Split('|')[data.Split('|').Length - 1]);
-        if(data.Contains("&MakeRoom"))
+        if (data.Contains("&Enter"))
+        {
+            int roomid = int.Parse(data.Split('|')[2]);
+            for (int i = 0; i < XMLManager.clienttotalroomcnt; i++)
+                if (XMLManager.totalroom[i].serveridx == roomid)
+                    return;
+            itemDisplay.makeroom(data.Split('|')[1]); ;
+            XMLManager.makeroom(data.Split('|')[1], roomid);
+            return;
+        }
+            if (data.Contains("&MakeRoom"))
         {
             itemDisplay.makeroom(data.Split('|')[1]);
             XMLManager.makeroom(data.Split('|')[1], int.Parse(data.Split('|')[2]));
@@ -228,6 +239,7 @@ public class Client : MonoBehaviour {
     }
     public void MakeRoom(string data)
     {
+        serverid = 0;
         Debug.Log(data + "MakeRoom in client");
         data += "|" + GPS.latitude.ToString() + "|" + GPS.longitude.ToString();
         Send(data);

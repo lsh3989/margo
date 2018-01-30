@@ -11,13 +11,13 @@ using UnityEngine.UI;
 
 public class Wifi : MonoBehaviour {
 
-    public float LastGPSChecktime;
+    public float LastWifiChecktime;
     public GameObject wifiname;
     // Use this for initialization
     public String wifi;
     void Start () {
 
-         wifi= "noconnect";
+         wifi= "<unknown ssid>";
     }
     /*string GetSSID()
     {
@@ -43,16 +43,18 @@ public class Wifi : MonoBehaviour {
 
     try
     {
-            wifiname.GetComponent<Text>().text = "1";
+          //  wifiname.GetComponent<Text>().text = "1";
         using (var activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"))
         {
-                wifiname.GetComponent<Text>().text = "2";
+              //  wifiname.GetComponent<Text>().text = "2";
             using (var wifiManager = activity.Call<AndroidJavaObject>("getSystemService", "wifi"))
             {
-                    wifiname.GetComponent<Text>().text = "3";
-                    wifiname.GetComponent<Text>().text = wifiManager.Call<AndroidJavaObject>("getConnectionInfo").ToString();
-                    wifiname.GetComponent<Text>().text = wifiManager.Call<AndroidJavaObject>("getConnectionInfo").Call<string>("getSSID");
-            }
+                 //   wifiname.GetComponent<Text>().text = "3";
+                    //wifiname.GetComponent<Text>().text = wifiManager.Call<AndroidJavaObject>("getConnectionInfo").ToString();
+                    tempSSID = wifiManager.Call<AndroidJavaObject>("getConnectionInfo").Call<string>("getSSID");
+                    tempSSID += "<";
+                    tempSSID += wifiManager.Call<AndroidJavaObject>("getConnectionInfo").Call<string>("getBSSID");
+                }
         }
     }
     catch (Exception e)
@@ -65,24 +67,24 @@ public class Wifi : MonoBehaviour {
 void Update () {
 
         wifiname.GetComponent<Text>().text = wifi;
-        wifi = getSSID();
         
-       /* if ((Time.fixedTime) - LastGPSChecktime >= 5)
+        if ((Time.fixedTime) - LastWifiChecktime >= 5)
         {
             
-            LastGPSChecktime = Time.fixedTime;
-            string SSID = "can't detect";
-            SSID = getSSID();
-            Debug.Log(SSID);
-                string ordermessage = "&MakeRoom|";
-                ordermessage += SSID
-                ;
+            LastWifiChecktime = Time.fixedTime;
+           // if (wifi != getSSID())
+           // {
+                wifi = getSSID();
+                Debug.Log(wifi);
+                string ordermessage = "&MakeRoom|&wifi<";
+                ordermessage += wifi;
 
                 GameObject.Find("Server").GetComponent<Client>().MakeRoom(ordermessage);
+           // }
             
             
-         //  }
-        }*/
+         
+        }
         
 
         }

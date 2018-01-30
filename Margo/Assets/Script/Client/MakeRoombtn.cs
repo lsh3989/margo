@@ -20,7 +20,7 @@ public class MakeRoombtn : MonoBehaviour {
     }
     public void MakeRoombutton()
     {
-        GameObject menu = gameObject.transform.parent.gameObject;
+        GameObject menu = gameObject.transform.parent.parent.gameObject;
         GameObject go = Instantiate(MakeRoomprefab, menu.transform) as GameObject;
 
     }

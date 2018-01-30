@@ -2,7 +2,7 @@ Android
 SceneListBegin?
 Assets/Scene/MargoMain.unity
 SceneListEnd?
-dd9153071bcecbb888dde9b7a3f37ae4 Assembly-CSharp.dll:.NFCDevice
+7ba6d3a0fde3627e028c663d9df93070 Assembly-CSharp.dll:.NFCDevice
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 970a95104359198fe1a98ef48655de8c UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -147,7 +147,7 @@ c04c4ae3d4ca2964edb29fca84d2e40f Assembly-CSharp.dll:.MakeRoombtn
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 41f178ed7ef5b37e555ae004c83f64ce Assembly-CSharp.dll:.EnterChat
-4a721c123390d5a8a1f596d947d26f45 Assembly-CSharp.dll:.Wifi
+ba00d941f4a485cef7e895ba7e5dfbf1 Assembly-CSharp.dll:.Wifi
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PanelDestroy
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft

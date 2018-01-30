@@ -38,20 +38,23 @@ public class Server : MonoBehaviour {
         chatingroom = new List<Chatingroom>();
         chatingroom.Add(new Chatingroom());
         chatingroom[0].roomid = roomcnt++;
-        chatingroom[0].roomName = "제1공학관";
+        chatingroom[0].ServerroomName = "제1공학관";
+        chatingroom[0].ClientroomName = "제1공학관";
         chatingroom[0].latitude = (float)37.561845;
         chatingroom[0].longitude = (float)126.936167;
         chatingroom[0].clients = new List<ServerClient>();
         chatingroom.Add(new Chatingroom());
         chatingroom[1].roomid = roomcnt++;
-        chatingroom[1].roomName = "중앙도서관";
+        chatingroom[1].ServerroomName = "중앙도서관";
+        chatingroom[1].ClientroomName = "중앙도서관";
         chatingroom[1].latitude = (float)37.563703;
         chatingroom[1].longitude = (float)126.936911;
 
         chatingroom[1].clients = new List<ServerClient>();
         chatingroom.Add(new Chatingroom());
         chatingroom[2].roomid = roomcnt++;
-        chatingroom[2].roomName = "공학원";
+        chatingroom[2].ServerroomName = "공학원";
+        chatingroom[2].ClientroomName = "공학원";
         chatingroom[2].latitude = (float)37.560837;
         chatingroom[2].longitude = (float)126.9354687;
 
@@ -59,7 +62,7 @@ public class Server : MonoBehaviour {
 
         chatingroom.Add(new Chatingroom());
         chatingroom[3].roomid = roomcnt++;
-        chatingroom[3].roomName = "전체방";
+        chatingroom[3].ServerroomName = "전체방";
         chatingroom[3].clients = new List<ServerClient>();
         // chatingroom[3].latitude = (float)37.560837;
         //  chatingroom[3].longitude = (float)126.9354687;
@@ -150,17 +153,46 @@ public class Server : MonoBehaviour {
         
         if(data.Contains("&MakeRoom"))
             {
+            string roomname;
+            string ssid="", bssid="";
 
+            string broadmessage;
+            roomname = data.Split('|')[1];
+            if(roomname.Contains("&wifi"))
+            {
+                ssid = roomname.Split('<')[1];
+                bssid = roomname.Split('<')[2];
+                roomname = bssid; //BSSID;
+            }
+            for(int i = 0;i<roomcnt;i++)
+            {
+                if(chatingroom[i].ServerroomName == roomname)
+                {
+                    if (chatingroom[i].clients.Contains(c) == false)
+                        chatingroom[i].clients.Add(c);
+                    broadmessage = "Enter|" + chatingroom[serveridx].ClientroomName + '|' + chatingroom[serveridx].roomid;
+                    return;
+                }
+            }
             Debug.Log(roomcnt + "roomcnt in server");
        //     chatingroom = new List<Chatingroom>();
             chatingroom.Add(new Chatingroom());
             chatingroom[roomcnt].roomid = roomcnt;
-            chatingroom[roomcnt].roomName = data.Split('|')[1];
+            if (bssid == "")
+            {
+                chatingroom[roomcnt].ServerroomName = data.Split('|')[1];
+                chatingroom[roomcnt].ClientroomName = data.Split('|')[1];
+            }
+            else
+            {
+                chatingroom[roomcnt].ServerroomName = bssid;
+                chatingroom[roomcnt].ClientroomName = ssid;
+
+            }
             chatingroom[roomcnt].latitude = float.Parse(data.Split('|')[2]);
             chatingroom[roomcnt].longitude = float.Parse(data.Split('|')[3]);
             chatingroom[roomcnt].clients = new List<ServerClient>();
-            string broadmessage;
-            broadmessage = "&MakeRoom|" + chatingroom[roomcnt].roomName+"|"+ roomcnt.ToString();
+            broadmessage = "&MakeRoom|" + chatingroom[roomcnt].ClientroomName+"|"+ roomcnt.ToString();
             Makeroom(broadmessage, c);
 
             roomcnt++;
@@ -213,6 +245,8 @@ public class Server : MonoBehaviour {
             c.clientName = data.Split('|')[1];
             if (chatingroom[serveridx].clients.Contains(c) == false)
                 chatingroom[serveridx].clients.Add(c);
+            string broadmessage;
+            broadmessage = "Enter|" + chatingroom[serveridx].ClientroomName + '|' + chatingroom[serveridx].roomid;
             return;
         }
         if (data.Contains("&Gps"))
@@ -287,7 +321,7 @@ public class Server : MonoBehaviour {
             {
                 if(distance < min[j].distance)
                 {
-                    for (int k = j + 1; k < 3; k++)
+                    for (int k = 2; k >= j+1; k--)
                         min[k] = min[k - 1];
                     min[j].distance = (float)distance;
                     min[j].idx = i;
@@ -297,9 +331,9 @@ public class Server : MonoBehaviour {
         }
         //Array.Sort(min);
         data += "|";
-        data += (chatingroom[min[0].idx].roomName + "|" + min[0].distance.ToString() + "|" + min[0].idx.ToString() + "|");
-        data += (chatingroom[min[1].idx].roomName + "|" + min[1].distance.ToString() + "|" + min[1].idx.ToString() + "|");
-        data += (chatingroom[min[2].idx].roomName + "|" + min[2].distance.ToString() + "|" + min[2].idx.ToString());
+        data += (chatingroom[min[0].idx].ClientroomName + "|" + min[0].distance.ToString() + "|" + min[0].idx.ToString() + "|");
+        data += (chatingroom[min[1].idx].ClientroomName + "|" + min[1].distance.ToString() + "|" + min[1].idx.ToString() + "|");
+        data += (chatingroom[min[2].idx].ClientroomName + "|" + min[2].distance.ToString() + "|" + min[2].idx.ToString());
         try
         {
             StreamWriter writer = new StreamWriter(c.tcp.GetStream());
@@ -359,7 +393,8 @@ public class Chatingroom
 {
     public int roomid;
     public int totalprice;
-    public string roomName;
+    public string ServerroomName;
+    public string ClientroomName;
     public int peapleNum;
     public float latitude;
     public float longitude;
