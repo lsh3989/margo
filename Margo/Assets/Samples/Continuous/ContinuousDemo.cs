@@ -55,7 +55,9 @@ public class ContinuousDemo : MonoBehaviour {
 				TextHeader.text = "";
 			}
 			TextHeader.text += "Found: " + barCodeType + " / " + barCodeValue + "\n";
-            SceneManager.LoadScene("MargoMain");
+            GameObject.Find("SceneManager").GetComponent<QRStart>().qrdata.text = barCodeValue;
+
+            SceneManager.LoadScene("Blank");
             RestartTime += Time.realtimeSinceStartup + 1f;
 
 			// Feedback
@@ -91,7 +93,7 @@ public class ContinuousDemo : MonoBehaviour {
 	{
 		// Try to stop the camera before loading another scene
 		StartCoroutine(StopCamera(() => {
-			SceneManager.LoadScene("Boot");
+			SceneManager.LoadScene("Blank");
 		}));
 	}
 

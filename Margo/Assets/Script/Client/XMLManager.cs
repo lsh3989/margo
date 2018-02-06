@@ -84,6 +84,7 @@ public class XMLManager : MonoBehaviour {
             item3.chatroomname = "&Gps";
 
             totalroom[clienttotalroomcnt].chatroomname = "전체방";
+        totalroom[clienttotalroomcnt].clientidx = 3;
             totalroom[clienttotalroomcnt++].serveridx = 3;
 
         Debug.Log(clienttotalroomcnt + "clienttotalroomcnt in makeroom2");
@@ -117,7 +118,9 @@ public class XMLManager : MonoBehaviour {
         Debug.Log(roomserveridx + "roomserveridx in makeroom");
         
         userDB.chatlist.Add(totalroom[clienttotalroomcnt]);
+        totalroom[clienttotalroomcnt].clientidx = clienttotalroomcnt;
         totalroom[clienttotalroomcnt++].serveridx = roomserveridx;
+
         GameObject newchatroom = Instantiate(ChatCanvas) as GameObject;
         //newchatroom = Instantiate(ChatCanvas) as GameObject;
         newchatroom.transform.SetParent(Chat.transform, false);
@@ -140,6 +143,7 @@ public class Chatroom
     public string chatroomname;
     public int talknum;
     public string[] talks;
+    public int clientidx;
     public int serveridx;
 }
 

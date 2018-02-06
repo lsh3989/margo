@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Servicebtn : MonoBehaviour {
+public class Servicebtn : MonoBehaviour
+{
     public GameObject panelprefab;
     public GameObject paymentprefab;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public GameObject easypayingprefab;
+    public GameObject normalpayingprefab;
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
     public void servicebtn1()
     {
         GameObject menu = gameObject.transform.parent.gameObject;
@@ -21,8 +26,18 @@ public class Servicebtn : MonoBehaviour {
     }
     public void servicebtn2()
     {
-        GameObject payment= gameObject.transform.parent.gameObject;
+        GameObject payment = gameObject.transform.parent.gameObject;
         GameObject go = Instantiate(paymentprefab, payment.transform) as GameObject;
     }
+    public void paybtn1()
+    {
+        GameObject easypay = gameObject.transform.parent.gameObject;
+        GameObject go = Instantiate(easypayingprefab, easypay.transform) as GameObject;
+    }
 
+    public void paybtn2()
+    {
+        GameObject normalpay = gameObject.transform.parent.gameObject;
+        GameObject go = Instantiate(normalpayingprefab, normalpay.transform) as GameObject;
+    }
 }

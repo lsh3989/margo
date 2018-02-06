@@ -33,6 +33,10 @@ public class Payment : MonoBehaviour {
         GameObject.Find("Server").GetComponent<Client>().payment(paymentmessage);
         payment.transform.parent.GetComponent<RectTransform>().position = new Vector3(7000, 0, 0);
     }
+    public void cancelbtn()
+    {
+        payment.transform.parent.GetComponent<RectTransform>().position = new Vector3(7000, 0, 0);
+    }
     // Update is called once per frame
     void Update () {
 		

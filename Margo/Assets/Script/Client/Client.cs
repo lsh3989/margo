@@ -31,7 +31,7 @@ public class Client : MonoBehaviour {
     private void Start()
     {
         itemDisplay = scenemanager.GetComponent<itemDisplay>();
-        serverid = 0;
+        //serverid = 0;
     }
     public void ConnectToServer()
     {
@@ -40,7 +40,14 @@ public class Client : MonoBehaviour {
         XMLManager.userDB.username = clientName;
         //If alreay connected, ignore this function
         if (socketReady)
+        {
+            Destroy(GameObject.Find("Login"));
+            //  GameObject.Find("ChatWindow").GetComponent<Image>().enabled = true;
+
+            GameObject.Find("Canvas").transform.GetChild(1).gameObject.SetActive(true);
             return;
+            
+        }
         // Default host / port values
         string host = "165.132.58.240";         //연구실
       //string host = "192.168.0.2";              //집
@@ -86,6 +93,14 @@ public class Client : MonoBehaviour {
     
         if (socketReady)
         {
+            if (GameObject.Find("Login"))
+            {
+                Destroy(GameObject.Find("Login"));
+                //  GameObject.Find("ChatWindow").GetComponent<Image>().enabled = true;
+
+                GameObject.Find("Canvas").transform.GetChild(1).gameObject.SetActive(true);
+            }
+             
             if (stream.DataAvailable)
             {
                 string data = reader.ReadLine();
@@ -128,18 +143,21 @@ public class Client : MonoBehaviour {
             XMLManager.makeroom(data.Split('|')[1], int.Parse(data.Split('|')[2]));
             return;
         }
-        if(data.Contains("&Pricerequest"))
+        if (data.Contains("&Pricerequest"))
         {
             int totalprice, peapleNum;
-            totalprice = int.Parse( data.Split('|')[1]);
+            totalprice = int.Parse(data.Split('|')[1]);
             peapleNum = int.Parse(data.Split('|')[2]);
             int childcount;
+            int priceperperson = (totalprice / peapleNum);
             childcount = GameObject.Find("ChatCanvas(Clone)").transform.childCount;
-            GameObject.Find("ChatCanvas(Clone)").transform.GetChild(childcount-1). GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "총금액 : "+totalprice.ToString() + "원";
-            GameObject.Find("ChatCanvas(Clone)").transform.GetChild(childcount - 1).GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>().text = "총인원 : "+peapleNum.ToString()+"명";
+            GameObject.Find("ChatCanvas(Clone)").transform.GetChild(childcount - 1).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = "총금액 : " + totalprice.ToString() + "원";
+            GameObject.Find("ChatCanvas(Clone)").transform.GetChild(childcount - 1).GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>().text = "총인원 : " + peapleNum.ToString() + "명";
+            GameObject.Find("ChatCanvas(Clone)").transform.GetChild(childcount - 1).GetChild(0).GetChild(0).GetChild(2).GetComponent<Text>().text = "1인당 계산시 : " + priceperperson.ToString() + "원";
+            //GameObject.Find("ChatCanvas(Clone)").transform.GetChild(childcount - 1).GetChild(0).GetChild(0).GetChild(3).GetComponent<Text>().text = "남은 금액 : " + priceperperson.ToString() + "원";
             return;
         }
-        if(data.Contains( "&Gps"))
+        if (data.Contains( "&Gps"))
         {
             Debug.Log("gps from server in client");
 
@@ -150,13 +168,14 @@ public class Client : MonoBehaviour {
             {
                 XMLManager.userDB.chatlist[i].chatroomname = data.Split('|')[i*3+1] + "    거리 : " + data.Split('|')[i * 3 + 2] + "미터";
                 XMLManager.userDB.chatlist[i].serveridx = int.Parse(data.Split('|')[i * 3 + 3]);
+                Debug.Log(XMLManager.userDB.chatlist[i].serveridx + " at " + i + "chatlist.serveridx");
             }
             
             Debug.Log("@@@@@@@@@@@@@5" + XMLManager.userDB.chatlist[0].chatroomname+ XMLManager.userDB.chatlist[1].chatroomname + XMLManager.userDB.chatlist[2].chatroomname);
             Debug.Log("gps from server in client check1");
-            mode.transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = XMLManager.userDB.chatlist[0].chatroomname;
-            mode.transform.GetChild(1).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = XMLManager.userDB.chatlist[1].chatroomname;
-            mode.transform.GetChild(1).transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).GetComponent<Text>().text = XMLManager.userDB.chatlist[2].chatroomname;
+            mode.transform.GetChild(3).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = XMLManager.userDB.chatlist[0].chatroomname;
+            mode.transform.GetChild(3).transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = XMLManager.userDB.chatlist[1].chatroomname;
+            mode.transform.GetChild(3).transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).GetComponent<Text>().text = XMLManager.userDB.chatlist[2].chatroomname;
 
             return;
            
@@ -175,35 +194,45 @@ public class Client : MonoBehaviour {
 
             return;
         }
-        
-        messangeCnt[clientid]++;
-        chatContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(chatContainer.GetComponent<RectTransform>().sizeDelta.x, messangeCnt[clientid] * 100+200);
-
-        GameObject go = Instantiate(messagePrefab, chatContainer.transform) as GameObject;
-        go.GetComponent<RectTransform>().localPosition = new Vector3(0, -(messangeCnt[clientid] - 1) * 100, 0);
-        if (data.Contains("&CHAT"))
+        for(int i = 0;i < XMLManager.userDB.chatlist.Count;i++)
         {
-            if (data.Split('|')[0] == clientName)
+            if(XMLManager.userDB.chatlist[i].serveridx == serverid)
             {
-                go.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
-                go.GetComponent<RectTransform>().localPosition = new Vector3(120, -(messangeCnt[clientid] - 1) * 100, 0);
-                go.transform.GetChild(1).GetComponent<RectTransform>().localPosition = new Vector3(-600, -(messangeCnt[clientid] - 1) * 100, 0);
-                go.transform.GetChild(2).GetComponent<RectTransform>().localPosition = new Vector3(-600, -(messangeCnt[clientid] - 1) * 100, 0);
+                clientid = XMLManager.userDB.chatlist[i].clientidx;
+                int mcnt = chatContainer.transform.childCount;
+                mcnt++;
+                messangeCnt[clientid]++;
+                chatContainer.GetComponent<RectTransform>().sizeDelta = new Vector2(chatContainer.GetComponent<RectTransform>().sizeDelta.x, chatContainer.GetComponent<RectTransform>().sizeDelta.y+100);
 
+                GameObject go = Instantiate(messagePrefab, chatContainer.transform) as GameObject;
+                go.GetComponent<RectTransform>().localPosition = new Vector3(0, -mcnt * 100, 0);
+                if (data.Contains("&CHAT"))
+                {
+                    if (data.Split('|')[0] == clientName)
+                    {
+                        go.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
+                        go.GetComponent<RectTransform>().localPosition = new Vector3(120, -mcnt * 100, 0);
+                        go.transform.GetChild(1).GetComponent<RectTransform>().localPosition = new Vector3(-600, -mcnt * 100, 0);
+                        go.transform.GetChild(2).GetComponent<RectTransform>().localPosition = new Vector3(-600, -mcnt * 100, 0);
+
+                    }
+                    go.transform.GetChild(1).GetComponent<Text>().text = data.Split('|')[0];
+                    data = data.Split('|')[2];
+                }
+                else if (data.Contains("&MASTER"))
+                {
+                    go.transform.GetChild(0).GetComponent<Image>().color = Color.green;
+                    go.transform.GetChild(1).GetComponent<Text>().text = "Master";
+                    data = data.Split('|')[1];
+                }
+                go.transform.GetChild(0).GetComponentInChildren<Text>().text = data;
+
+
+                chatContainer = tmpchatcontainer;
             }
-            go.transform.GetChild(1).GetComponent<Text>().text = data.Split('|')[0];
-            data = data.Split('|')[2];
         }
-        else if(data.Contains("&MASTER"))
-        {
-            go.transform.GetChild(0).GetComponent<Image>().color = Color.green;
-            go.transform.GetChild(1).GetComponent<Text>().text = "Master";
-            data = data.Split('|')[1];
-        }
-        go.transform.GetChild(0).GetComponentInChildren<Text>().text = data;
-
-
-        chatContainer = tmpchatcontainer;
+       
+        
     }
     private void Send(string data)
     {
@@ -239,7 +268,7 @@ public class Client : MonoBehaviour {
     }
     public void MakeRoom(string data)
     {
-        serverid = 0;
+        //serverid = 0;
         Debug.Log(data + "MakeRoom in client");
         data += "|" + GPS.latitude.ToString() + "|" + GPS.longitude.ToString();
         Send(data);

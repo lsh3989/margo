@@ -29,7 +29,7 @@ public class itemDisplay : MonoBehaviour {
         foreach (Chatroom item in XMLManager.ins.userDB.chatlist)
         {
             GameObject newchatroom = Instantiate(chatprefab) as GameObject;
-            newchatroom.transform.SetParent(mode.transform.GetChild(1).transform.GetChild(0).transform, false);
+            newchatroom.transform.SetParent(mode.transform.GetChild(3).transform.GetChild(0).transform, false);
             newchatroom.transform.GetChild(0).GetComponent<Text>().text = item.chatroomname;
             if (item.chatroomname.Contains("&Gps"))
                 newchatroom.GetComponent<Image>().color = Color.yellow;

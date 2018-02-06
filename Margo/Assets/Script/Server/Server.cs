@@ -245,8 +245,9 @@ public class Server : MonoBehaviour {
             c.clientName = data.Split('|')[1];
             if (chatingroom[serveridx].clients.Contains(c) == false)
                 chatingroom[serveridx].clients.Add(c);
-            string broadmessage;
-            broadmessage = "Enter|" + chatingroom[serveridx].ClientroomName + '|' + chatingroom[serveridx].roomid;
+           // string broadmessage;
+           // broadmessage = "Enter|" + chatingroom[serveridx].ClientroomName + '|' + chatingroom[serveridx].roomid;
+           // Broadcast(broadmessage, chatingroom[serveridx].clients, serveridx);
             return;
         }
         if (data.Contains("&Gps"))
@@ -278,15 +279,30 @@ public class Server : MonoBehaviour {
         {
             Broadcast( data.Split('|')[1], chatingroom[serveridx].clients, serveridx);
         }
+        Debug.Log(data + "Broadcast in oncomingdata in server");
+        foreach (ServerClient cc in chatingroom[serveridx].clients)
+        {
+            try
+            {
+                Debug.Log(cc.clientName + "Clientname Broadcast in server");
+                
+            }
+            catch (Exception e)
+            {
+                
+            }
+        }
         Broadcast(c.clientName + "|&CHAT|" + data, chatingroom[serveridx].clients, serveridx);
     }
     private void Broadcast(string data, List<ServerClient> cl, int serveridx)
     {
         data += "|" + serveridx.ToString();
+        
         foreach (ServerClient c in cl)
         {
             try
             {
+                Debug.Log(data + "Broadcast in server");
                 StreamWriter writer = new StreamWriter(c.tcp.GetStream());
                 writer.WriteLine(data);
                 writer.Flush();
